@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Animacja Canvas</title>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="400"></canvas>
+        <script>
+            const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const ball = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  radius: 20,
+  dy: 2 // prędkość ruchu piłki w pionie
+};
+
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+  ctx.fillStyle = "red";
+  ctx.fill();
+  ctx.closePath();
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function update() {
+  clearCanvas();
+  drawBall();
+
+  // aktualizacja pozycji piłki w pionie
+  ball.y += ball.dy;
+
+  // odbicie piłki, gdy dotknie górnej lub dolnej krawędzi canvas
+  if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+    ball.dy = -ball.dy;
+  }
+}
+
+function loop() {
+  update();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>
